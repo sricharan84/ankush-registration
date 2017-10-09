@@ -1,0 +1,110 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTodo">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Node/Angular Todo App</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		#todo-list 				{ margin-bottom:30px; }
+		#todo-form 	 			{ margin-bottom:50px; }
+	</style>
+
+	<!-- SPELLS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+	<script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+
+	
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="mainController">
+	<div class="container">
+
+		<!-- HEADER AND TODO COUNT -->
+		<div class="jumbotron text-center">
+			<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+		</div>
+
+		<!-- TODO LIST -->
+		<div id="todo-list" class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+
+				
+
+				<!-- LOOP OVER THE TODOS IN $scope.todos -->
+				<div class="checkbox" ng-repeat="todo in todos">
+					<label>
+						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
+					</label>
+				</div>
+
+				<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+
+			</div>
+		</div>
+
+		<!-- FORM TO CREATE TODOS -->
+		<div id="todo-form" class="row">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<!--<form>
+					<div class="form-group">
+
+						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+					</div>
+
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+				</form>-->
+
+				<form name="myForm">
+					<fieldset>
+					<legend>Upload on form submit</legend>
+					Username:
+					<input type="text" name="userName" ng-model="formData.text" size="31" required>
+					<br>Photo:
+					<!--<input type="file" ngf-select ng-model="formData.picFile" name="file"    
+							accept="image/*" ngf-max-size="2MB" required
+							ngf-model-invalid="errorFile">
+					<i ng-show="myForm.file.$error.required">*required</i><br>
+					<i ng-show="myForm.file.$error.maxSize">File too large 
+						{{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+					<img ng-show="myForm.file.$valid" ngf-thumbnail="formData.picFile" class="thumb"> <button ng-click="formData.picFile = null" ng-show="formData.picFile">Remove</button>
+					<br>
+					<button ng-disabled="!myForm.$valid" 
+							ng-click="uploadPic(formData.picFile)">Submit</button>
+					<span class="progress" ng-show="picFile.progress >= 0">
+						<div style="width:{{picFile.progress}}%" 
+							ng-bind="picFile.progress + '%'"></div>
+					</span>
+					<span ng-show="picFile.result">Upload Successful</span>
+					<span class="err" ng-show="errorMsg">{{errorMsg}}</span>-->
+
+					<input type="file" id="file" required>
+					<button ng-disabled="!myForm.$valid" 
+							ng-click="addUser()">Submit</button>
+					</fieldset>
+					<br>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
