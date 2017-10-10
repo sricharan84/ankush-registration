@@ -8,14 +8,45 @@ var Schema = mongoose.Schema;
 // );
 // var Item = mongoose.model('Clothes',ItemSchema);
 
-module.exports = mongoose.model('Todo', {
-    text: {
+module.exports = mongoose.model('registrations', {
+    candidateName: {
         type: String,
         default: ''
     },
-    img: {
-        data: Buffer,
-        contentType: String
+    fatherName: {
+        type: String,
+        default: ''
+    },
+    motherName: {
+        type: String,
+        default: ''
+    },
+    address: {
+        type: String,
+        default: ''
+    },
+    gender: {
+        type: String,
+        default: ''
+    },
+    dob: {
+        type: Number,
+        default: ''
+    },
+    qualification: {
+        type: String,
+        default: ''
+    },
+    aadharNumber: {
+        type: Number,
+        default: ''
+    },
+    remarks: {
+        type: String,
+        default: ''
+    },
+    file: {
+        type: String,
     }
 });
 

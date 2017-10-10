@@ -22,7 +22,7 @@ module.exports = function (app, upload) {
     });
 
     // create todo and send back all todos after creation
-    app.post('/api/todos',upload.any(), function (req, res) {
+    app.post('/api/register', upload.any(), function (req, res) {
 
         console.log(req.body);
         console.log(req.files);
@@ -30,10 +30,7 @@ module.exports = function (app, upload) {
 
 
         // create a todo, information comes from AJAX request from Angular
-        Todo.create({
-            text: req.body.text,
-            done: false
-        }, function (err, todo) {
+        Todo.create(req.body, function (err, todo) {
             if (err)
                 res.send(err);
 

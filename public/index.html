@@ -22,22 +22,20 @@
 	<!-- SPELLS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
-	<script src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
-	<script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
-	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-	<script src="js/services/todos.js"></script> <!-- load our todo service -->
-	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="js/controllers/user-controller.js"></script> <!-- load up our controller -->
+	<script src="js/services/user-service.js"></script> <!-- load our todo service -->
+	<script src="js/app.js"></script> <!-- load our main application -->
 
 	
 
 </head>
 <!-- SET THE CONTROLLER -->
-<body ng-controller="mainController">
+<body ng-controller="userController">
 	<div class="container">
 
 		<!-- HEADER AND TODO COUNT -->
 		<div class="jumbotron text-center">
-			<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+			<h1 class="label label-info">REGISTRATION</h1>
 		</div>
 
 		<!-- TODO LIST -->
@@ -47,11 +45,11 @@
 				
 
 				<!-- LOOP OVER THE TODOS IN $scope.todos -->
-				<div class="checkbox" ng-repeat="todo in todos">
+				<!--<div class="checkbox" ng-repeat="todo in todos">
 					<label>
 						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
 					</label>
-				</div>
+				</div>-->
 
 				<p class="text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
@@ -62,44 +60,135 @@
 
 		<!-- FORM TO CREATE TODOS -->
 		<div id="todo-form" class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<!--<form>
-					<div class="form-group">
-
-						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-					</div>
-
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-				</form>-->
-
-				<form name="myForm">
+			<div class="col-sm-8 col-sm-offset-2">
+				<!--<form name="myForm">
 					<fieldset>
 					<legend>Upload on form submit</legend>
 					Username:
 					<input type="text" name="userName" ng-model="formData.text" size="31" required>
 					<br>Photo:
-					<!--<input type="file" ngf-select ng-model="formData.picFile" name="file"    
-							accept="image/*" ngf-max-size="2MB" required
-							ngf-model-invalid="errorFile">
-					<i ng-show="myForm.file.$error.required">*required</i><br>
-					<i ng-show="myForm.file.$error.maxSize">File too large 
-						{{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-					<img ng-show="myForm.file.$valid" ngf-thumbnail="formData.picFile" class="thumb"> <button ng-click="formData.picFile = null" ng-show="formData.picFile">Remove</button>
-					<br>
-					<button ng-disabled="!myForm.$valid" 
-							ng-click="uploadPic(formData.picFile)">Submit</button>
-					<span class="progress" ng-show="picFile.progress >= 0">
-						<div style="width:{{picFile.progress}}%" 
-							ng-bind="picFile.progress + '%'"></div>
-					</span>
-					<span ng-show="picFile.result">Upload Successful</span>
-					<span class="err" ng-show="errorMsg">{{errorMsg}}</span>-->
-
 					<input type="file" id="file" required>
 					<button ng-disabled="!myForm.$valid" 
 							ng-click="addUser()">Submit</button>
 					</fieldset>
 					<br>
+				</form>-->
+
+				<form name="userForm" ng-submit="registerUser()" novalidate>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>CANDIDATE NAME</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.candidateName.$invalid && !userForm.candidateName.$pristine }">
+							<input type="text" name="candidateName" class="form-control" ng-model="formData.candidateName" required>
+							<p ng-show="userForm.candidateName.$invalid && !userForm.candidateName.$pristine" class="help-block">Your name is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>FATHER'S NAME</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.fatherName.$invalid && !userForm.fatherName.$pristine }">
+							<input type="text" name="fatherName" class="form-control" ng-model="formData.fatherName" required>
+							<p ng-show="userForm.fatherName.$invalid && !userForm.fatherName.$pristine" class="help-block">Your Father name is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>MOTHER'S NAME</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.motherName.$invalid && !userForm.motherName.$pristine }">
+							<input type="text" name="motherName" class="form-control" ng-model="formData.motherName" required>
+							<p ng-show="userForm.motherName.$invalid && !userForm.motherName.$pristine" class="help-block">Your Mother name is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>ADDRESS</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
+							<textarea type="text" name="address" class="form-control" ng-model="formData.address" required rows="5"></textarea>
+							<p ng-show="userForm.address.$invalid && !userForm.address.$pristine" class="help-block">Your Address is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>GENDER</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
+							<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="male">MALE</label>
+							<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="female">FEMALE</label>
+							<p ng-show="userForm.optradio.$invalid && !userForm.optradio.$pristine" class="help-block">Please select your gender</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>CONTACT NUMBER</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine }">
+							<input type="number" name="name" class="form-control" ng-model="formData.contactNumber" required>
+							<p ng-show="userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine" class="help-block">Your Contact number is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>DATE OF BIRTH</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.dob.$invalid && !userForm.dob.$pristine }">
+							<input type="number" name="name" class="form-control" ng-model="formData.dob" required>
+							<p ng-show="userForm.dob.$invalid && !userForm.dob.$pristine" class="help-block">You name is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>QUALIFICATION</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.qualification.$invalid && !userForm.qualification.$pristine }">
+							<input type="text" name="name" class="form-control" ng-model="formData.qualification" required>
+							<p ng-show="userForm.qualification.$invalid && !userForm.qualification.$pristine" class="help-block">Your name is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>AADHAR NUMBER</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine }">
+							<input type="number" name="name" class="form-control" ng-model="formData.aadharNumber" required>
+							<p ng-show="userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine" class="help-block">Your Aadhar number is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>REMARKS</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.remarks.$invalid && !userForm.remarks.$pristine }">
+							<input type="text" name="name" class="form-control" ng-model="formData.remarks" required>
+							<p ng-show="userForm.remarks.$invalid && !userForm.remarks.$pristine" class="help-block">You name is required.</p>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>CERTIFICATE</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.cert.$invalid && !userForm.cert.$pristine }">
+							<input name="cert" class="form-control" type="file" id="file" required>
+						</div>
+					</div>
+					
+					
+					<button type="submit" class="btn btn-primary pull-right" ng-disabled="userForm.$invalid">Submit</button>
+					
 				</form>
 
 			</div>
