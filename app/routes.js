@@ -1,4 +1,4 @@
-var Todo = require('./models/todo');
+var Todo = require('./models/users');
 
 function getTodos(res) {
     Todo.find(function (err, todos) {
@@ -23,11 +23,6 @@ module.exports = function (app, upload) {
 
     // create todo and send back all todos after creation
     app.post('/api/register', upload.any(), function (req, res) {
-
-        console.log(req.body);
-        console.log(req.files);
-
-
 
         // create a todo, information comes from AJAX request from Angular
         Todo.create(req.body, function (err, todo) {

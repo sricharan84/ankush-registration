@@ -35,12 +35,12 @@ app.use(express.static('./public')); 		// set the static files location /public/
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 var storage = multer.diskStorage({
- destination: function(req, file, cb) {
- cb(null, path.join(__dirname, 'uploads'))
- },
- filename: function(req, file, cb) {
- cb(null, file.originalname);
- }
+    destination: function(req, file, cb) {
+      cb(null, path.join(__dirname, 'uploads'))
+    },
+    filename: function(req, file, cb) {
+      cb(null, req.body.candidateName+'_'+req.body.aadharNumber+'_'+file.originalname);
+    }
 });
  
 var upload = multer({
