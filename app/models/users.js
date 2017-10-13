@@ -30,7 +30,7 @@ module.exports = mongoose.model('registrations', {
         default: ''
     },
     dob: {
-        type: Number,
+        type: String,
         default: ''
     },
     qualification: {
@@ -45,8 +45,17 @@ module.exports = mongoose.model('registrations', {
         type: String,
         default: ''
     },
-    file: {
+    imageFile: {
         type: String,
+    },
+    tenthFile: {
+        type: String
+    },
+    aadharFile: {
+        type: String
+    },
+    createdOn: {
+        type: String
     }
 });
 

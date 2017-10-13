@@ -35,6 +35,7 @@
 
 		<!-- HEADER AND TODO COUNT -->
 		<div class="jumbotron text-center">
+			<img src="../assets/ankush-logo.png">
 			<h1 class="label label-info">REGISTRATION</h1>
 		</div>
 
@@ -119,7 +120,7 @@
 							<label>DATE OF BIRTH</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.dob.$invalid && !userForm.dob.$pristine }">
-							<input type="number" name="name" class="form-control" ng-model="formData.dob" required>
+							<input type="date" name="name" class="form-control" ng-model="formData.dob" required>
 							<p ng-show="userForm.dob.$invalid && !userForm.dob.$pristine" class="help-block">You name is required.</p>
 						</div>
 					</div>
@@ -156,15 +157,34 @@
 
 					<div class="row form-group">
 						<div class="col-sm-4">
-							<label>CERTIFICATE</label>
+							<label>PHOTO:</label>
 						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.cert.$invalid && !userForm.cert.$pristine }">
-							<input name="cert" class="form-control" type="file" id="file" required>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.photoUpload.$invalid && !userForm.photoUpload.$pristine }">
+							<input name="photoUpload" class="form-control" type="file" id="photoUpload" required>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>10TH CERTIFICATE</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.tenthUpload.$invalid && !userForm.tenthUpload.$pristine }">
+							<input name="tenthUpload" class="form-control" type="file" id="tenthUpload" required>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<div class="col-sm-4">
+							<label>AADHAR</label>
+						</div>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharUpload.$invalid && !userForm.aadharUpload.$pristine }">
+							<input name="aadharUpload" class="form-control" type="file" id="aadharUpload" required>
 						</div>
 					</div>
 					
 					
 					<button type="submit" class="btn btn-primary pull-right" ng-disabled="userForm.$invalid">Submit</button>
+					<!--<button type="Reset" class="btn btn-primary pull-right">RESET</button>-->
 					
 				</form>
 

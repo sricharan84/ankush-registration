@@ -6,14 +6,22 @@ angular.module('UserController', [])
 		$scope.loading = false;
 
 		$scope.registerUser = function() {
-			
+
 			var fd = new FormData();
 
 			for(key in $scope.formData){
 				fd.append(key, $scope.formData[key])
 			}
-			var file = $('#file')[0].files[0];
-			fd.append('file', file);
+			
+			var imageFile = $('#photoUpload')[0].files[0],
+				tenthFile = $('#tenthUpload')[0].files[0],
+				aadharFile = $('#aadharUpload')[0].files[0];
+
+			fd.append('imageFile', imageFile);
+			fd.append('tenthFile', tenthFile);
+			fd.append('aadharFile', aadharFile);
+
+			console.log($scope.formData);
 
 			$scope.loading = true;
 
@@ -25,7 +33,10 @@ angular.module('UserController', [])
 				}).finally(function(){
 					$scope.loading = false;
 					$scope.formData = {};
+					$scope.userForm.$setPristine();
 				});
+
+			
 		}
 
 	}]);
