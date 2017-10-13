@@ -32,11 +32,16 @@ angular.module('UserController', [])
 					console.log("error " + err);
 				}).finally(function(){
 					$scope.loading = false;
-					$scope.formData = {};
-					$scope.userForm.$setPristine();
+					$scope.resetForm();
 				});
 
 			
+		}
+
+		$scope.resetForm = function(){
+			$scope.formData = {};
+			$scope.userForm.$setPristine();
+			$('#regForm').trigger("reset");
 		}
 
 	}]);
