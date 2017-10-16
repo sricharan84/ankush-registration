@@ -1,1 +1,1 @@
-angular.module('scotchTodo', ['UserController', 'UserService']);
+angular.module('scotchTodo', ['UserController', 'UserService','ngFileUpload','ngMaterial','ui.mask']);

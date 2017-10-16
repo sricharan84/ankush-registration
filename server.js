@@ -31,8 +31,9 @@ app.use(function (req, res, next) {
 } )
 
 app.use(express.static('./public')); 		// set the static files location /public/img will be /img for users
-// app.use('/node_modules',express.static(__dirname + './node_modules'));
-// app.use(express.static('./assets'));
+app.use('/node_modules',express.static(__dirname + './node_modules'));
+app.use('/assets',express.static('./assets'));
+app.use('/styles',express.static('./styles'));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 var storage = multer.diskStorage({

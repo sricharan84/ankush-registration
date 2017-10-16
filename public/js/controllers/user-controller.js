@@ -1,7 +1,7 @@
 angular.module('UserController', [])
 
 	// inject the Todo service factory into our controller
-	.controller('userController', ['$scope','$http','userService', function($scope, $http, userService) {
+	.controller('userController', ['$scope','$http','userService', '$mdDialog', function($scope, $http, userService, $mdDialog) {
 		$scope.formData = {};
 		$scope.loading = false;
 
@@ -26,13 +26,15 @@ angular.module('UserController', [])
 			$scope.loading = true;
 
 			userService.registerUser(fd)
-				.success(function(data) {
+				.then(function(data) {
+					$scope.loading = false;
 					console.log('uploaded');
-				}).error(function(err, data) {
+				}).catch(function(err, data) {
 					console.log("error " + err);
 				}).finally(function(){
-					$scope.loading = false;
-					$scope.resetForm();
+					$scope.showConfirm().then(function(){
+						$scope.resetForm();
+					});
 				});
 
 			
@@ -43,5 +45,15 @@ angular.module('UserController', [])
 			$scope.userForm.$setPristine();
 			$('#regForm').trigger("reset");
 		}
+
+		$scope.showConfirm = function(ev) {
+			// Appending dialog to document.body to cover sidenav in docs app
+			var confirm = $mdDialog.confirm()
+				.title('UPDATED SUCCESSFULLY!!')
+				.textContent('Thanks for the information provided')
+				.ok('OK');
+
+			return $mdDialog.show(confirm);
+		};
 
 	}]);

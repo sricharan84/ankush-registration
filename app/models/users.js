@@ -38,7 +38,7 @@ module.exports = mongoose.model('registrations', {
         default: ''
     },
     aadharNumber: {
-        type: Number,
+        type: String,
         default: ''
     },
     remarks: {

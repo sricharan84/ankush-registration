@@ -12,6 +12,16 @@ function getUsers(res) {
     });
 };
 
+function isExistingUser(num) {
+    Users.find({aadharNumber: num},function(err, docs){
+        if(docs.length){
+            cb('Candidate already exists', null);
+        }else{
+            next();
+        }
+    });
+}
+
 module.exports = function (app, upload) {
 
     // api ---------------------------------------------------------------------
@@ -24,7 +34,9 @@ module.exports = function (app, upload) {
     // create todo and send back all todos after creation
     app.post('/api/register', upload.any(), function (req, res) {
 
-        console.log(req.files);
+        //isExistingUser(req.body.aadharNumber);
+
+        req.body.dob = new Date(req.body.dob).toLocaleString().split(',')[0];
         req.body.createdOn = new Date().toLocaleString();
 
         // create a todo, information comes from AJAX request from Angular
@@ -32,7 +44,6 @@ module.exports = function (app, upload) {
             if (err)
                 res.send(err);
 
-            // get and return all the todos after you create another
             getUsers(res);
         });
 

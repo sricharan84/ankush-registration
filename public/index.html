@@ -12,16 +12,18 @@
 	<!-- SCROLLS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<style>
-		html 					{ overflow-y:scroll; }
-		body 					{ padding-top:50px; }
-		#todo-list 				{ margin-bottom:30px; }
-		#todo-form 	 			{ margin-bottom:50px; }
-	</style>
+	 <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+	 <link rel="stylesheet" href="/styles/design.css">
 
 	<!-- SPELLS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script><!-- load angular -->
+	<script src="/node_modules/angular-aria/angular-aria.js"></script> 
+    <script src="/node_modules/angular-animate/angular-animate.js"></script> 
+    <script src="/node_modules/angular-material/angular-material.js"></script>
+	<script src="/node_modules/angular-ui-mask/dist/mask.js"></script> 
+	<script src="/node_modules/ng-file-upload/dist/ng-file-upload.js"></script><!-- load angular -->	
+	<script src="/node_modules/ng-file-upload/dist/ng-file-upload-shim.js"></script><!-- load angular -->
 	<script src="js/controllers/user-controller.js"></script> <!-- load up our controller -->
 	<script src="js/services/user-service.js"></script> <!-- load our todo service -->
 	<script src="js/app.js"></script> <!-- load our main application -->
@@ -33,23 +35,28 @@
 <body ng-controller="userController">
 	<div class="container">
 
-		<!-- HEADER AND TODO COUNT -->
-		<div class="jumbotron text-center">
-			<img src="../assets/ankush-logo.png">
-			<h1 class="label label-info">REGISTRATION</h1>
+		<div class="ankush-header">
+			<div class="row">
+				<div class="col-sm-4">
+					<img class="ankush-logo" src="/assets/ankush-logo.png">					
+				</div>
+				<div class="col-sm-8">
+					<h1 class="">REGISTRATION</h1>					
+				</div>
+			</div>
 		</div>
 
 		<!-- TODO LIST -->
-		<div id="todo-list" class="row">
+		<div class="row">
 			<div class="col-sm-4 col-sm-offset-4">
-				<p class="text-center" ng-show="loading">
+				<p class="loading text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
 				</p>
 			</div>
 		</div>
 
 		<!-- FORM TO CREATE TODOS -->
-		<div id="todo-form" class="row">
+		<div class="ankush-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2">
 				
 				<form name="userForm" id="regForm" ng-submit="registerUser()" novalidate>
@@ -98,11 +105,20 @@
 						<div class="col-sm-4">
 							<label>GENDER</label>
 						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
+						<!--<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
 							<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="male">MALE</label>
 							<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="female">FEMALE</label>
 							<p ng-show="userForm.optradio.$invalid && !userForm.optradio.$pristine" class="help-block">Please select your gender</p>
+						</div>-->
+
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
+							<md-radio-group layout="row" ng-model="formData.gender">
+								<md-radio-button value="male">Male</md-radio-button>
+								<md-radio-button value="female"> Female </md-radio-button>
+							</md-radio-group>
 						</div>
+						
+
 					</div>
 
 					<div class="row form-group">
@@ -140,7 +156,7 @@
 							<label>AADHAR NUMBER</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine }">
-							<input type="number" name="name" class="form-control" ng-model="formData.aadharNumber" required>
+							<input type="text" name="name" ui-mask="9999-9999-9999" class="form-control" ng-model="formData.aadharNumber" required>
 							<p ng-show="userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine" class="help-block">Your Aadhar number is required.</p>
 						</div>
 					</div>
@@ -160,7 +176,7 @@
 							<label>PHOTO:</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.photoUpload.$invalid && !userForm.photoUpload.$pristine }">
-							<input name="photoUpload" class="form-control" type="file" id="photoUpload" required>
+							<input name="photoUpload" class="form-control" type="file" id="photoUpload" ngf-select="" ng-model="formData.imageFile" required>
 						</div>
 					</div>
 
@@ -169,7 +185,7 @@
 							<label>10TH CERTIFICATE</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.tenthUpload.$invalid && !userForm.tenthUpload.$pristine }">
-							<input name="tenthUpload" class="form-control" type="file" id="tenthUpload" required>
+							<input name="tenthUpload" class="form-control" type="file" id="tenthUpload" ngf-select="" ng-model="formData.tenthFile" required>
 						</div>
 					</div>
 
@@ -178,12 +194,13 @@
 							<label>AADHAR</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharUpload.$invalid && !userForm.aadharUpload.$pristine }">
-							<input name="aadharUpload" class="form-control" type="file" id="aadharUpload" required>
+							<input name="aadharUpload" class="form-control" type="file" id="aadharUpload" ngf-select="" ng-model="formData.aadharFile" required>
 						</div>
 					</div>
 					
 					
-					<button type="submit" class="btn btn-primary pull-right" ng-disabled="userForm.$invalid">Submit</button>
+					<!--<button type="submit" class="btn btn-primary pull-right" ng-disabled="userForm.$invalid">Submit</button>-->
+					<md-button type="submit" class="md-raised md-primary pull-right" ng-disabled="userForm.$invalid">Submit</md-button>
 					<!--<button type="Reset" class="btn btn-primary pull-right">RESET</button>-->
 					
 				</form>
