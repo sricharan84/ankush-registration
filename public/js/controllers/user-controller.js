@@ -5,6 +5,10 @@ angular.module('UserController', [])
 		$scope.formData = {};
 		$scope.loading = false;
 
+		$scope.qualificationList = ["SSC","INTERMEDIATE","DEGREE","BTECH"];
+
+		$scope.casteList = ["OC", "SC","ST","BC-A","BC-B","BC-C","BC-D","BC-E"];
+
 		$scope.registerUser = function() {
 
 			var fd = new FormData();
@@ -21,8 +25,6 @@ angular.module('UserController', [])
 			fd.append('tenthFile', tenthFile);
 			fd.append('aadharFile', aadharFile);
 
-			console.log($scope.formData);
-
 			$scope.loading = true;
 
 			userService.registerUser(fd)
@@ -31,6 +33,9 @@ angular.module('UserController', [])
 					console.log('uploaded');
 				}).catch(function(err, data) {
 					console.log("error " + err);
+					$scope.showError().then(function(){
+						$scope.resetForm();
+					});
 				}).finally(function(){
 					$scope.showConfirm().then(function(){
 						$scope.resetForm();
@@ -51,6 +56,16 @@ angular.module('UserController', [])
 			var confirm = $mdDialog.confirm()
 				.title('UPDATED SUCCESSFULLY!!')
 				.textContent('Thanks for the information provided')
+				.ok('OK');
+
+			return $mdDialog.show(confirm);
+		};
+
+		$scope.showError = function(ev) {
+			// Appending dialog to document.body to cover sidenav in docs app
+			var confirm = $mdDialog.alert()
+				.title('ERROR ENCOUNTERED')
+				.textContent('Please try again')
 				.ok('OK');
 
 			return $mdDialog.show(confirm);

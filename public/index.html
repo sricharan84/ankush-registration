@@ -66,7 +66,7 @@
 							<label>CANDIDATE NAME</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.candidateName.$invalid && !userForm.candidateName.$pristine }">
-							<input type="text" name="candidateName" class="form-control" ng-model="formData.candidateName" required>
+							<input type="text" name="candidateName" class="form-control block-char" ng-model="formData.candidateName" capitalize required>
 							<p ng-show="userForm.candidateName.$invalid && !userForm.candidateName.$pristine" class="help-block">Your name is required.</p>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 							<label>FATHER'S NAME</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.fatherName.$invalid && !userForm.fatherName.$pristine }">
-							<input type="text" name="fatherName" class="form-control" ng-model="formData.fatherName" required>
+							<input type="text" name="fatherName" class="form-control block-char" ng-model="formData.fatherName" capitalize required>
 							<p ng-show="userForm.fatherName.$invalid && !userForm.fatherName.$pristine" class="help-block">Your Father name is required.</p>
 						</div>
 					</div>
@@ -86,7 +86,7 @@
 							<label>MOTHER'S NAME</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.motherName.$invalid && !userForm.motherName.$pristine }">
-							<input type="text" name="motherName" class="form-control" ng-model="formData.motherName" required>
+							<input type="text" name="motherName" class="form-control block-char" ng-model="formData.motherName" capitalize required>
 							<p ng-show="userForm.motherName.$invalid && !userForm.motherName.$pristine" class="help-block">Your Mother name is required.</p>
 						</div>
 					</div>
@@ -96,7 +96,7 @@
 							<label>ADDRESS</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
-							<textarea type="text" name="address" class="form-control" ng-model="formData.address" required rows="5"></textarea>
+							<textarea type="text" name="address" class="form-control block-char" ng-model="formData.address" capitalize required rows="5"></textarea>
 							<p ng-show="userForm.address.$invalid && !userForm.address.$pristine" class="help-block">Your Address is required.</p>
 						</div>
 					</div>
@@ -113,8 +113,8 @@
 
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
 							<md-radio-group layout="row" ng-model="formData.gender">
-								<md-radio-button value="male">Male</md-radio-button>
-								<md-radio-button value="female"> Female </md-radio-button>
+								<md-radio-button value="MALE">Male</md-radio-button>
+								<md-radio-button value="FEMALE"> Female </md-radio-button>
 							</md-radio-group>
 						</div>
 						
@@ -126,7 +126,7 @@
 							<label>CONTACT NUMBER</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine }">
-							<input type="number" name="name" class="form-control" ng-model="formData.contactNumber" required>
+							<input type="number" name="name" class="form-control" ng-model="formData.contactNumber" maxlength="10" required>
 							<p ng-show="userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine" class="help-block">Your Contact number is required.</p>
 						</div>
 					</div>
@@ -146,7 +146,10 @@
 							<label>QUALIFICATION</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.qualification.$invalid && !userForm.qualification.$pristine }">
-							<input type="text" name="name" class="form-control" ng-model="formData.qualification" required>
+							<!-- <input type="text" name="name" class="form-control" ng-model="formData.qualification" required> -->
+							<select class="form-control" ng-model="formData.qualification" ng-options="item as item for item in qualificationList" required>
+								<!-- <option value="">PLEASE SELECT</option>	 -->
+							</select>							
 							<p ng-show="userForm.qualification.$invalid && !userForm.qualification.$pristine" class="help-block">Your name is required.</p>
 						</div>
 					</div>
@@ -163,17 +166,17 @@
 
 					<div class="row form-group">
 						<div class="col-sm-4">
-							<label>REMARKS</label>
+							<label>CASTE</label>
 						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.remarks.$invalid && !userForm.remarks.$pristine }">
-							<input type="text" name="name" class="form-control" ng-model="formData.remarks" required>
-							<p ng-show="userForm.remarks.$invalid && !userForm.remarks.$pristine" class="help-block">You name is required.</p>
+						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.caste.$invalid && !userForm.caste.$pristine }">
+							<select class="form-control" ng-model="formData.caste" ng-options="item as item for item in casteList" required></select>							
+							<p ng-show="userForm.caste.$invalid && !userForm.caste.$pristine" class="help-block">You name is required.</p>
 						</div>
 					</div>
 
 					<div class="row form-group">
 						<div class="col-sm-4">
-							<label>PHOTO:</label>
+							<label>PASSPORT PHOTO:</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.photoUpload.$invalid && !userForm.photoUpload.$pristine }">
 							<input name="photoUpload" class="form-control" type="file" id="photoUpload" ngf-select="" ng-model="formData.imageFile" required>
@@ -182,7 +185,7 @@
 
 					<div class="row form-group">
 						<div class="col-sm-4">
-							<label>10TH CERTIFICATE</label>
+							<label>10TH CERTIFICATE(MARKS SHEET)</label>
 						</div>
 						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.tenthUpload.$invalid && !userForm.tenthUpload.$pristine }">
 							<input name="tenthUpload" class="form-control" type="file" id="tenthUpload" ngf-select="" ng-model="formData.tenthFile" required>

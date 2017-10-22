@@ -41,7 +41,7 @@ module.exports = mongoose.model('registrations', {
         type: String,
         default: ''
     },
-    remarks: {
+    caste: {
         type: String,
         default: ''
     },
