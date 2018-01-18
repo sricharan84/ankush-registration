@@ -35,6 +35,7 @@ app.use('/node_modules',express.static(__dirname + './node_modules'));
 app.use('/assets',express.static('./assets'));
 app.use('/styles',express.static('./styles'));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+app.use('/material',express.static('./material'));
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {

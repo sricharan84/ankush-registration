@@ -35,6 +35,7 @@ angular.module('UserService', [])
 			},
 			validateUser : function(AadharNumber) {
 				//TODO: check if the user is already registered based on the Aadhar number
+				return $http.post('/api/validate', AadharNumber)
 			}
 		}
 	}]);

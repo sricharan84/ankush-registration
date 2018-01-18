@@ -49,6 +49,22 @@ module.exports = function (app, upload) {
 
     });
 
+    app.post('/api/validate', function(req, res){
+        Users.find({aadharNumber: req.body.aadharNumber}, function(err, docs){
+            console.log(docs);
+            if(err){
+                res.send(err);
+            }
+            if(docs.length){
+                setTimeout(function(){
+                    res.status(404).send('Already existing User');                    
+                }, 5000);
+            }
+            else{
+                res.send('success');
+            }
+        })
+    });
     // delete a todo
     app.delete('/api/todos/:todo_id', function (req, res) {
         Users.remove({

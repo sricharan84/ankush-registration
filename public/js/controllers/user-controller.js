@@ -33,7 +33,7 @@ angular.module('UserController', [])
 					console.log('uploaded');
 				}).catch(function(err, data) {
 					console.log("error " + err);
-					$scope.showError().then(function(){
+					$scope.showError('Please try again').then(function(){
 						$scope.resetForm();
 					});
 				}).finally(function(){
@@ -61,14 +61,30 @@ angular.module('UserController', [])
 			return $mdDialog.show(confirm);
 		};
 
-		$scope.showError = function(ev) {
+		$scope.showError = function(msg) {
 			// Appending dialog to document.body to cover sidenav in docs app
 			var confirm = $mdDialog.alert()
 				.title('ERROR ENCOUNTERED')
-				.textContent('Please try again')
+				.textContent(msg)
 				.ok('OK');
 
 			return $mdDialog.show(confirm);
 		};
+
+		$scope.validateUser = function(fdata) {
+			if(fdata.aadharNumber){
+				$scope.validatingUser = true;
+				userService.validateUser(fdata).then(function(res){
+
+				}, function(err) {
+					$scope.showError('User Already registered').then(function(){
+						$scope.formData.aadharNumber = '';
+					})
+				}).finally(function(){
+					$scope.validatingUser = false;
+				});
+			}
+			
+		}
 
 	}]);

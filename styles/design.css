@@ -1,3 +1,6 @@
+body{
+  background-color: #f3f3f3;
+}
 .ankush-header .ankush-logo{
     width: 100px;
 }
@@ -39,4 +42,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .block-char{
   text-transform: uppercase;
+}
+
+.align-middle {
+    vertical-align: middle;
+}
+
+.fnt-sz-3{
+  font-size: 3rem !important;
 }

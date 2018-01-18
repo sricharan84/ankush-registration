@@ -13,6 +13,9 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	 <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+	 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	 <link href="/styles/material.min.css" rel="stylesheet">
+	 <link href="/styles/style.min.css" rel="stylesheet">
 	 <link rel="stylesheet" href="/styles/design.css">
 
 	<!-- SPELLS -->
@@ -24,6 +27,7 @@
 	<script src="/node_modules/angular-ui-mask/dist/mask.js"></script> 
 	<script src="/node_modules/ng-file-upload/dist/ng-file-upload.js"></script><!-- load angular -->	
 	<script src="/node_modules/ng-file-upload/dist/ng-file-upload-shim.js"></script><!-- load angular -->
+	<script src="/material/material.min.js"></script>
 	<script src="js/controllers/user-controller.js"></script> <!-- load up our controller -->
 	<script src="js/services/user-service.js"></script> <!-- load our todo service -->
 	<script src="js/app.js"></script> <!-- load our main application -->
@@ -34,182 +38,269 @@
 <!-- SET THE CONTROLLER -->
 <body ng-controller="userController">
 	<div class="container">
-
-		<div class="ankush-header">
-			<div class="row">
-				<div class="col-sm-4">
-					<img class="ankush-logo" src="/assets/ankush-logo.png">					
-				</div>
-				<div class="col-sm-8">
-					<h1 class="">REGISTRATION</h1>					
-				</div>
-			</div>
-		</div>
-
 		<!-- TODO LIST -->
 		<div class="row">
 			<div class="col-sm-4 col-sm-offset-4">
 				<p class="loading text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
 				</p>
+				<p class="loading text-center" ng-show="validatingUser">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+					<span class="loader-text">VALIDATING USER</span>
+				</p>
 			</div>
 		</div>
 
 		<!-- FORM TO CREATE TODOS -->
-		<div class="ankush-form" class="row">
-			<div class="col-sm-8 col-sm-offset-2">
+		<div class="ankush-form" class="row">			
+			<div class="col-sm-12">
+				<md-card>
+										
+				</md-card>
 				
-				<form name="userForm" id="regForm" ng-submit="registerUser()" novalidate>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>CANDIDATE NAME</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.candidateName.$invalid && !userForm.candidateName.$pristine }">
-							<input type="text" name="candidateName" class="form-control block-char" ng-model="formData.candidateName" capitalize required>
-							<p ng-show="userForm.candidateName.$invalid && !userForm.candidateName.$pristine" class="help-block">Your name is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>FATHER'S NAME</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.fatherName.$invalid && !userForm.fatherName.$pristine }">
-							<input type="text" name="fatherName" class="form-control block-char" ng-model="formData.fatherName" capitalize required>
-							<p ng-show="userForm.fatherName.$invalid && !userForm.fatherName.$pristine" class="help-block">Your Father name is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>MOTHER'S NAME</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.motherName.$invalid && !userForm.motherName.$pristine }">
-							<input type="text" name="motherName" class="form-control block-char" ng-model="formData.motherName" capitalize required>
-							<p ng-show="userForm.motherName.$invalid && !userForm.motherName.$pristine" class="help-block">Your Mother name is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>ADDRESS</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
-							<textarea type="text" name="address" class="form-control block-char" ng-model="formData.address" capitalize required rows="5"></textarea>
-							<p ng-show="userForm.address.$invalid && !userForm.address.$pristine" class="help-block">Your Address is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>GENDER</label>
-						</div>
-						<!--<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
-							<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="male">MALE</label>
-							<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="female">FEMALE</label>
-							<p ng-show="userForm.optradio.$invalid && !userForm.optradio.$pristine" class="help-block">Please select your gender</p>
-						</div>-->
-
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
-							<md-radio-group layout="row" ng-model="formData.gender">
-								<md-radio-button value="MALE">Male</md-radio-button>
-								<md-radio-button value="FEMALE"> Female </md-radio-button>
-							</md-radio-group>
-						</div>
-						
-
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>CONTACT NUMBER</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine }">
-							<input type="number" name="name" class="form-control" ng-model="formData.contactNumber" maxlength="10" required>
-							<p ng-show="userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine" class="help-block">Your Contact number is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>DATE OF BIRTH</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.dob.$invalid && !userForm.dob.$pristine }">
-							<input type="date" name="name" class="form-control" ng-model="formData.dob" required>
-							<p ng-show="userForm.dob.$invalid && !userForm.dob.$pristine" class="help-block">You name is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>QUALIFICATION</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.qualification.$invalid && !userForm.qualification.$pristine }">
-							<!-- <input type="text" name="name" class="form-control" ng-model="formData.qualification" required> -->
-							<select class="form-control" ng-model="formData.qualification" ng-options="item as item for item in qualificationList" required>
-								<!-- <option value="">PLEASE SELECT</option>	 -->
-							</select>							
-							<p ng-show="userForm.qualification.$invalid && !userForm.qualification.$pristine" class="help-block">Your name is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>AADHAR NUMBER</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine }">
-							<input type="text" name="name" ui-mask="9999-9999-9999" class="form-control" ng-model="formData.aadharNumber" required>
-							<p ng-show="userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine" class="help-block">Your Aadhar number is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>CASTE</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.caste.$invalid && !userForm.caste.$pristine }">
-							<select class="form-control" ng-model="formData.caste" ng-options="item as item for item in casteList" required></select>							
-							<p ng-show="userForm.caste.$invalid && !userForm.caste.$pristine" class="help-block">You name is required.</p>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>PASSPORT PHOTO:</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.photoUpload.$invalid && !userForm.photoUpload.$pristine }">
-							<input name="photoUpload" class="form-control" type="file" id="photoUpload" ngf-select="" ng-model="formData.imageFile" required>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>10TH CERTIFICATE(MARKS SHEET)</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.tenthUpload.$invalid && !userForm.tenthUpload.$pristine }">
-							<input name="tenthUpload" class="form-control" type="file" id="tenthUpload" ngf-select="" ng-model="formData.tenthFile" required>
-						</div>
-					</div>
-
-					<div class="row form-group">
-						<div class="col-sm-4">
-							<label>AADHAR</label>
-						</div>
-						<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharUpload.$invalid && !userForm.aadharUpload.$pristine }">
-							<input name="aadharUpload" class="form-control" type="file" id="aadharUpload" ngf-select="" ng-model="formData.aadharFile" required>
-						</div>
-					</div>
-					
-					
-					<!--<button type="submit" class="btn btn-primary pull-right" ng-disabled="userForm.$invalid">Submit</button>-->
-					<md-button type="submit" class="md-raised md-primary pull-right" ng-disabled="userForm.$invalid">Submit</md-button>
-					<!--<button type="Reset" class="btn btn-primary pull-right">RESET</button>-->
-					
-				</form>
-
+				
 			</div>
 		</div>
+
+		<div class="row">
+					<div class="col s12 m8 l8">
+						<div class="card">
+							<h3 class="text-center">REGISTRATION FORM </h3>							
+							<div class="card-content">
+								<form name="userForm" id="regForm" ng-submit="registerUser()" novalidate>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>CANDIDATE NAME</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.candidateName.$invalid && !userForm.candidateName.$pristine }">
+											<input type="text" name="candidateName" class="form-control block-char" ng-model="formData.candidateName" capitalize required>
+											<p ng-show="userForm.candidateName.$invalid && !userForm.candidateName.$pristine" class="help-block">Your name is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>FATHER'S NAME</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.fatherName.$invalid && !userForm.fatherName.$pristine }">
+											<input type="text" name="fatherName" class="form-control block-char" ng-model="formData.fatherName" capitalize required>
+											<p ng-show="userForm.fatherName.$invalid && !userForm.fatherName.$pristine" class="help-block">Your Father name is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>MOTHER'S NAME</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.motherName.$invalid && !userForm.motherName.$pristine }">
+											<input type="text" name="motherName" class="form-control block-char" ng-model="formData.motherName" capitalize required>
+											<p ng-show="userForm.motherName.$invalid && !userForm.motherName.$pristine" class="help-block">Your Mother name is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>ADDRESS</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.address.$invalid && !userForm.address.$pristine }">
+											<textarea type="text" name="address" class="form-control block-char" ng-model="formData.address" capitalize required rows="5"></textarea>
+											<p ng-show="userForm.address.$invalid && !userForm.address.$pristine" class="help-block">Your Address is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>GENDER</label>
+										</div>
+										<!--<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
+											<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="male">MALE</label>
+											<label class="radio-inline"><input type="radio" ng-model="formData.gender" name="optradio" value="female">FEMALE</label>
+											<p ng-show="userForm.optradio.$invalid && !userForm.optradio.$pristine" class="help-block">Please select your gender</p>
+										</div>-->
+
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.optradio.$invalid && !userForm.optradio.$pristine }">
+											<md-radio-group layout="row" ng-model="formData.gender">
+												<md-radio-button value="MALE">Male</md-radio-button>
+												<md-radio-button value="FEMALE"> Female </md-radio-button>
+											</md-radio-group>
+										</div>
+										
+
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>CONTACT NUMBER</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine }">
+											<input type="number" name="name" class="form-control" ng-model="formData.contactNumber" maxlength="10" required>
+											<p ng-show="userForm.contactNumber.$invalid && !userForm.contactNumber.$pristine" class="help-block">Your Contact number is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>DATE OF BIRTH</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.dob.$invalid && !userForm.dob.$pristine }">
+											<input type="date" name="name" class="form-control" ng-model="formData.dob" required>
+											<p ng-show="userForm.dob.$invalid && !userForm.dob.$pristine" class="help-block">You name is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>QUALIFICATION</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.qualification.$invalid && !userForm.qualification.$pristine }">
+											<!-- <input type="text" name="name" class="form-control" ng-model="formData.qualification" required> -->
+											<select class="form-control" ng-model="formData.qualification" ng-options="item as item for item in qualificationList" required>
+												<!-- <option value="">PLEASE SELECT</option>	 -->
+											</select>							
+											<p ng-show="userForm.qualification.$invalid && !userForm.qualification.$pristine" class="help-block">Your name is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>AADHAR NUMBER</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine }">
+											<input type="text" name="name" ui-mask="9999-9999-9999" class="form-control" ng-model="formData.aadharNumber" ng-blur="validateUser(formData)" required>
+											<p ng-show="userForm.aadharNumber.$invalid && !userForm.aadharNumber.$pristine" class="help-block">Your Aadhar number is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>CASTE</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.caste.$invalid && !userForm.caste.$pristine }">
+											<select class="form-control" ng-model="formData.caste" ng-options="item as item for item in casteList" required></select>							
+											<p ng-show="userForm.caste.$invalid && !userForm.caste.$pristine" class="help-block">You name is required.</p>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>PASSPORT PHOTO:</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.photoUpload.$invalid && !userForm.photoUpload.$pristine }">
+											<input name="photoUpload" class="form-control" type="file" id="photoUpload" ngf-select="" ng-model="formData.imageFile" required>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>10TH CERTIFICATE(MARKS SHEET)</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.tenthUpload.$invalid && !userForm.tenthUpload.$pristine }">
+											<input name="tenthUpload" class="form-control" type="file" id="tenthUpload" ngf-select="" ng-model="formData.tenthFile" required>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-sm-4">
+											<label>AADHAR</label>
+										</div>
+										<div class="col-sm-8" ng-class="{ 'has-error' : userForm.aadharUpload.$invalid && !userForm.aadharUpload.$pristine }">
+											<input name="aadharUpload" class="form-control" type="file" id="aadharUpload" ngf-select="" ng-model="formData.aadharFile" required>
+										</div>
+									</div>
+									
+									
+									<!--<button type="submit" class="btn btn-primary pull-right" ng-disabled="userForm.$invalid">Submit</button>-->
+									<md-button type="submit" class="md-raised md-primary pull-right" ng-disabled="userForm.$invalid">Submit <i class="material-icons align-middle">send</i> </md-button>
+									<md-button type="reset" class="md-raised md-button pull-right" >Reset </md-button>
+									<!--<button type="Reset" class="btn btn-primary pull-right">RESET</button>-->
+									
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<div class="col s12 m4 l4">
+						
+						<div class="card" id="card-stats">
+							<div class="card-content blue-grey white-text">
+								<p class="card-stats-title"><i class="material-icons align-middle fnt-sz-3">group_add</i> REGISTRATIONS</p>
+								<h4 class="card-stats-number">566</h4>
+								</p>
+							</div>
+							
+						</div>
+						
+						<div id="profile-card" class="card">
+							<div class="card-image waves-effect waves-block waves-light">
+								<img class="activator" src="/assets/ankush-logo.png" alt="user background">
+							</div>
+							<div class="card-content">
+								<img src="/assets/avatar.jpg" alt="" class="circle responsive-img activator card-profile-image">
+								<a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right">
+									<i class="material-icons">create</i>
+								</a>
+
+								<span class="card-title activator grey-text text-darken-4">SRIVARUN NARISETTY</span>
+								<p><i class="material-icons">person_outline</i> Cheif Executive Officer (CEO)</p>
+								<!--<p><i class="material-icons">local_phone</i> +1 (612) 222 8989</p>
+								<p><i class="material-icons">local_post_office</i> mail@domain.com</p>-->								
+							</div>
+							<div class="card-reveal" style="display: none; transform: translateY(0px);">
+								<span class="card-title grey-text text-darken-4">CREW <i class="material-icons right">close</i></span>							
+								<div class="row" id="work-collections">
+									<div class="col s12 m12 16">
+										<ul id="projects-collection" class="collection">
+											<li class="collection-item avatar">
+												<i class="material-icons circle light-blue">account_circle</i>
+												<span class="collection-header">Ganesh</span>
+												<p>Designation</p>
+												<p>Mail</p>
+												<p>phone</p>
+											</li>
+											<li class="collection-item avatar">
+												<i class="material-icons circle light-blue">account_circle</i>
+												<span class="collection-header">Sai</span>
+												<p>Designation</p>
+												<p>Mail</p>
+												<p>phone</p>
+											</li>									
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+
+
+						<div class="map-card">
+							<div class="card">
+								<div class="card-image waves-effect waves-block waves-light">
+									<div id="map-canvas" data-lat="16.5061743" data-lng="80.6480153" class="" style="position: relative; overflow: hidden;"></div>
+								</div>
+								<div class="card-content">                    
+									<a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right">
+										<i class="mdi-maps-pin-drop"></i>
+									</a>
+									<h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">Company Name LLC</a>
+									</h4>
+									<p class="blog-post-content">Some more information about this company.</p>
+								</div>
+								<div class="card-reveal" style="display: none; transform: translateY(0px);">
+									<span class="card-title grey-text text-darken-4">Company Name LLC <i class="mdi-navigation-close right"></i></span>                   
+									<p>Here is some more information about this company. As a creative studio we believe no client is too big nor too small to work with us to obtain good advantage.By combining the creativity of artists with the precision of engineers we develop custom solutions that achieve results.Some more information about this company.</p>
+									<p><i class="mdi-action-perm-identity cyan-text text-darken-2"></i> Manager Name</p>
+									<p><i class="mdi-communication-business cyan-text text-darken-2"></i> 125, ABC Street, New Yourk, USA</p>
+									<p><i class="mdi-action-perm-phone-msg cyan-text text-darken-2"></i> +1 (612) 222 8989</p>
+									<p><i class="mdi-communication-email cyan-text text-darken-2"></i> support@geekslabs.com</p>                    
+								</div>
+							</div>
+						</div>
+
+					</div>
+              </div>
+
+
 	</div>
 
 </body>
